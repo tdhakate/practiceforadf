@@ -1,0 +1,11 @@
+{
+	"name": "AzureKeyVault1",
+	"properties": {
+		"description": "Created azure key vault service for practice",
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://Tri-FirstKeyValut.vault.azure.net/"
+		}
+	}
+}
