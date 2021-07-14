@@ -1,0 +1,18 @@
+{
+	"name": "AzureBlobStorage_Keyvault",
+	"properties": {
+		"description": "Linked service for Key vault example",
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"connectionString": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "keyforstorage-tri"
+			}
+		}
+	}
+}
