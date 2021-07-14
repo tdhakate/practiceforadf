@@ -1,0 +1,21 @@
+{
+	"name": "csv_Parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStoragecsv_json",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Samplecsvfile.csv",
+				"container": "csv"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

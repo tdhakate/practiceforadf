@@ -1,0 +1,19 @@
+{
+	"name": "Output_Json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStoragecsv_json",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "json"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

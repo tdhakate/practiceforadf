@@ -1,0 +1,9 @@
+{
+	"name": "csvTojsonAdf",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "d9dd0067-3e7c-4003-bc8b-af3cabbb5dd6",
+		"tenantId": "bb8e1572-b72b-4dd4-9d45-d2f7aae6187f"
+	}
+}
