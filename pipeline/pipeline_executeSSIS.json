@@ -17,19 +17,15 @@
 				"userProperties": [],
 				"typeProperties": {
 					"packageLocation": {
-						"packagePath": "\\\\storageaccountssis.file.core.windows.net\\undefined",
+						"packagePath": "\\\\csvtojsonstoacnt.file.core.windows.net\\abc-ssis",
 						"type": "File",
 						"typeProperties": {
 							"accessCredential": {
 								"domain": "Azure",
-								"userName": "storageaccountssis",
+								"userName": "csvtojsonstoacnt",
 								"password": {
-									"type": "AzureKeyVaultSecret",
-									"store": {
-										"referenceName": "AzureKeyVault_df",
-										"type": "LinkedServiceReference"
-									},
-									"secretName": "blobstorageconnection"
+									"type": "SecureString",
+									"value": "**********"
 								}
 							}
 						}
