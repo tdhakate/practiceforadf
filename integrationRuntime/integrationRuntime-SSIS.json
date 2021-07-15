@@ -1,0 +1,38 @@
+{
+	"name": "integrationRuntime-SSIS",
+	"properties": {
+		"type": "Managed",
+		"description": "Azure SSIS runtime",
+		"typeProperties": {
+			"computeProperties": {
+				"location": "East US",
+				"nodeSize": "Standard_D1_v2",
+				"numberOfNodes": 1,
+				"maxParallelExecutionsPerNode": 1
+			},
+			"ssisProperties": {
+				"edition": "Standard",
+				"licenseType": "LicenseIncluded",
+				"dataProxyProperties": {
+					"connectVia": {
+						"type": "IntegrationRuntimeReference",
+						"referenceName": "integrationRuntimeTriveni"
+					},
+					"stagingLinkedService": {
+						"type": "LinkedServiceReference",
+						"referenceName": "AzureBlobStoragecsv_json"
+					}
+				},
+				"packageStores": [
+					{
+						"name": "demo-ssispackage",
+						"packageStoreLinkedService": {
+							"referenceName": "linkedService_ssis",
+							"type": "LinkedServiceReference"
+						}
+					}
+				]
+			}
+		}
+	}
+}
