@@ -1,0 +1,38 @@
+{
+	"name": "integrationRuntimeOnpremisessis",
+	"properties": {
+		"type": "Managed",
+		"description": "configuration of ssis",
+		"typeProperties": {
+			"computeProperties": {
+				"location": "East US",
+				"nodeSize": "Standard_D1_v2",
+				"numberOfNodes": 1,
+				"maxParallelExecutionsPerNode": 4
+			},
+			"ssisProperties": {
+				"edition": "Standard",
+				"licenseType": "LicenseIncluded",
+				"dataProxyProperties": {
+					"connectVia": {
+						"type": "IntegrationRuntimeReference",
+						"referenceName": "integrationRuntime-demo"
+					},
+					"stagingLinkedService": {
+						"type": "LinkedServiceReference",
+						"referenceName": "AzureBlobStorage1"
+					}
+				},
+				"packageStores": [
+					{
+						"name": "ssisstore",
+						"packageStoreLinkedService": {
+							"referenceName": "linkedService_ssis",
+							"type": "LinkedServiceReference"
+						}
+					}
+				]
+			}
+		}
+	}
+}
