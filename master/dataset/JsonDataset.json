@@ -1,0 +1,46 @@
+{
+	"name": "JsonDataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureStorageLinkedServiceDuplicate",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "json"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"EmpCode": {
+					"type": "string"
+				},
+				"EmpFName": {
+					"type": "string"
+				},
+				"EmpLName": {
+					"type": "string"
+				},
+				"Job": {
+					"type": "string"
+				},
+				"Manager": {
+					"type": "string"
+				},
+				"HireDate": {
+					"type": "string"
+				},
+				"Salary": {
+					"type": "string"
+				},
+				"DEPTCODE": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

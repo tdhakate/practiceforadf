@@ -1,0 +1,32 @@
+{
+	"name": "Dataflow",
+	"properties": {
+		"description": "Dataflow to remove duplicate data of employee files",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "JsonDataset",
+						"type": "DatasetReference"
+					},
+					"name": "DuplicateEmployees"
+				}
+			],
+			"sinks": [
+				{
+					"name": "sinksource"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ApplyAggregate"
+				},
+				{
+					"name": "RequiredColumns"
+				}
+			],
+			"script": "source(output(\n\t\tEmpCode as string,\n\t\tEmpFName as string,\n\t\tEmpLName as string,\n\t\tJob as string,\n\t\tManager as string,\n\t\tHireDate as string,\n\t\tSalary as string,\n\t\tDEPTCODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tdocumentForm: 'documentPerLine') ~> DuplicateEmployees\nDuplicateEmployees aggregate(count = count(1)) ~> ApplyAggregate\nApplyAggregate select(mapColumn(\n\t\tcount\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RequiredColumns\nRequiredColumns sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sinksource"
+		}
+	}
+}
