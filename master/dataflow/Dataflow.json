@@ -7,7 +7,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "JsonDataset",
+						"referenceName": "AzureSqlTable_Employee1",
 						"type": "DatasetReference"
 					},
 					"name": "DuplicateEmployees"
@@ -15,6 +15,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "AzureSqlTable_Employee1",
+						"type": "DatasetReference"
+					},
 					"name": "sinksource"
 				}
 			],
@@ -24,9 +28,12 @@
 				},
 				{
 					"name": "RequiredColumns"
+				},
+				{
+					"name": "SortData"
 				}
 			],
-			"script": "source(output(\n\t\tEmpCode as string,\n\t\tEmpFName as string,\n\t\tEmpLName as string,\n\t\tJob as string,\n\t\tManager as string,\n\t\tHireDate as string,\n\t\tSalary as string,\n\t\tDEPTCODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tdocumentForm: 'documentPerLine') ~> DuplicateEmployees\nDuplicateEmployees aggregate(count = count(1)) ~> ApplyAggregate\nApplyAggregate select(mapColumn(\n\t\tcount\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RequiredColumns\nRequiredColumns sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sinksource"
+			"script": "parameters{\n\tEmpFName as string\n}\nsource(output(\n\t\tEmpCode as integer,\n\t\tEmpFName as string,\n\t\tEmpLName as string,\n\t\tJob as string,\n\t\tManager as string,\n\t\tHireDate as date,\n\t\tSalary as integer,\n\t\tDEPTCODE as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> DuplicateEmployees\nDuplicateEmployees aggregate(groupBy(EmpCode,\n\t\tEmpFName,\n\t\tEmpLName,\n\t\tJob,\n\t\tHireDate,\n\t\tSalary),\n\tempcode = count(1),\n\tpartitionBy('hash', 1)) ~> ApplyAggregate\nSortData select(skipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RequiredColumns\nApplyAggregate sort(asc(ApplyAggregate@EmpCode, true),\n\tpartitionLevel: true) ~> SortData\nRequiredColumns sink(allowSchemaDrift: true,\n\tvalidateSchema: true,\n\tinput(\n\t\tEmpCode as integer,\n\t\tEmpFName as string,\n\t\tEmpLName as string,\n\t\tJob as string,\n\t\tManager as string,\n\t\tHireDate as date,\n\t\tSalary as integer,\n\t\tDEPTCODE as integer\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sinksource"
 		}
 	}
 }
