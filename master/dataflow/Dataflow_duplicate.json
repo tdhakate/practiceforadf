@@ -1,5 +1,5 @@
 {
-	"name": "Dataflow",
+	"name": "Dataflow_duplicate",
 	"properties": {
 		"description": "Dataflow to remove duplicate data of employee files",
 		"type": "MappingDataFlow",
