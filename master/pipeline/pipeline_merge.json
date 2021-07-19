@@ -23,7 +23,11 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "None",
+					"runConcurrently": true,
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
 				}
 			}
 		],
