@@ -21,18 +21,19 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "AzureSqlTable_Employee3",
+						"type": "DatasetReference"
+					},
 					"name": "sink1"
 				}
 			],
 			"transformations": [
 				{
 					"name": "merge"
-				},
-				{
-					"name": "AlterRow1"
 				}
 			],
-			"script": "source(output(\n\t\temployee_id as integer,\n\t\tlast_name as string,\n\t\tfirst_name as string,\n\t\tsalary as decimal(19,4)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> table1tomerge\nsource(output(\n\t\tEmpID as integer,\n\t\tEmpName as string,\n\t\tLastName as string,\n\t\tDesignation as string,\n\t\tDepartment as string,\n\t\tJoiningDate as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> table2merge\ntable1tomerge, table2merge join(employee_id == EmpID,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> merge\nmerge alterRow() ~> AlterRow1\nAlterRow1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+			"script": "source(output(\n\t\temployee_id as integer,\n\t\tlast_name as string,\n\t\tfirst_name as string,\n\t\tsalary as decimal(19,4)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> table1tomerge\nsource(output(\n\t\tEmpID as integer,\n\t\tEmpName as string,\n\t\tLastName as string,\n\t\tDesignation as string,\n\t\tDepartment as string,\n\t\tJoiningDate as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> table2merge\ntable1tomerge, table2merge join(employee_id == EmpID,\n\tjoinType:'right',\n\tbroadcast: 'auto')~> merge\nmerge sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tEmpID as integer,\n\t\tEmpName as string,\n\t\tLastName as string,\n\t\tDesignation as string,\n\t\tDepartment as string,\n\t\tJoiningDate as timestamp\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
 		}
 	}
 }
