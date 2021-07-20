@@ -7,10 +7,17 @@
 			"sources": [
 				{
 					"dataset": {
+						"referenceName": "Dataset_Employeedata",
+						"type": "DatasetReference"
+					},
+					"name": "sourceEmp"
+				},
+				{
+					"dataset": {
 						"referenceName": "Dataset_DepartmentData",
 						"type": "DatasetReference"
 					},
-					"name": "sourcedept"
+					"name": "sourceDept"
 				},
 				{
 					"dataset": {
@@ -18,42 +25,18 @@
 						"type": "DatasetReference"
 					},
 					"name": "sourceLoc"
-				},
-				{
-					"dataset": {
-						"referenceName": "Dataset_Employeedata",
-						"type": "DatasetReference"
-					},
-					"name": "sourceEmp"
 				}
 			],
-			"sinks": [
-				{
-					"dataset": {
-						"referenceName": "AzureSqlTableEmployeeAllDetails",
-						"type": "DatasetReference"
-					},
-					"name": "sinkfiletable"
-				}
-			],
+			"sinks": [],
 			"transformations": [
 				{
-					"name": "JoinEmpDept"
+					"name": "JoinEmpdept"
 				},
 				{
-					"name": "Selectcolumns"
-				},
-				{
-					"name": "JoinEmpLoc"
-				},
-				{
-					"name": "SortRecords"
-				},
-				{
-					"name": "AlterRow1"
+					"name": "JoinEmploc"
 				}
 			],
-			"script": "source(output(\n\t\tDeptId as string,\n\t\tDeptname as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false) ~> sourcedept\nsource(output(\n\t\tLocId as string,\n\t\tLocname as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false) ~> sourceLoc\nsource(output(\n\t\tEmpId as string,\n\t\tEmpname as string,\n\t\tGender as string,\n\t\tSalary as string,\n\t\tDeptId as string,\n\t\tLocId as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false) ~> sourceEmp\nsourceEmp, sourcedept join(sourceEmp@DeptId == sourcedept@DeptId,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinEmpDept\nAlterRow1 select(mapColumn(\n\t\tEmpId,\n\t\tEmpname,\n\t\tGender,\n\t\tSalary,\n\t\tDeptname,\n\t\tDeptId = sourceEmp@DeptId,\n\t\tLocId,\n\t\tLocname\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Selectcolumns\nsourceEmp, sourceLoc join(sourceEmp@LocId == sourceLoc@LocId,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinEmpLoc\nJoinEmpLoc sort(asc(EmpId, true)) ~> SortRecords\nSortRecords alterRow(upsertIf(Deptname=='IT')) ~> AlterRow1\nSelectcolumns sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tEmpId as integer,\n\t\tEmpname as string,\n\t\tGender as string,\n\t\tSalary as integer,\n\t\tDeptId as integer,\n\t\tDeptName as string,\n\t\tLocId as integer,\n\t\tLocName as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['EmpId'],\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tEmpname,\n\t\tGender,\n\t\tSalary,\n\t\tDeptId,\n\t\tDeptName = Deptname,\n\t\tLocId\n\t)) ~> sinkfiletable"
+			"script": "source(output(\n\t\tEmpId as string,\n\t\tEmpname as string,\n\t\tGender as string,\n\t\tSalary as string,\n\t\tDeptId as string,\n\t\tLocId as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false) ~> sourceEmp\nsource(output(\n\t\tDeptId as string,\n\t\tDeptname as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false) ~> sourceDept\nsource(output(\n\t\tLocId as string,\n\t\tLocname as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false) ~> sourceLoc\nsourceEmp, sourceDept, sourceLoc join(sourceEmp@DeptId == sourceDept@DeptId,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinEmpdept\nJoinEmpdept join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinEmploc"
 		}
 	}
 }
