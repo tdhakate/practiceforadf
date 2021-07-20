@@ -29,7 +29,11 @@
 			],
 			"sinks": [
 				{
-					"name": "sink1"
+					"dataset": {
+						"referenceName": "AzureSqlTableEmployeeAllDetails",
+						"type": "DatasetReference"
+					},
+					"name": "sinkfiletable"
 				}
 			],
 			"transformations": [
@@ -46,7 +50,7 @@
 					"name": "SortRecords"
 				}
 			],
-			"script": "source(output(\n\t\tDeptId as string,\n\t\tDeptname as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false) ~> sourcedept\nsource(output(\n\t\tLocId as string,\n\t\tLocname as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false) ~> sourceLoc\nsource(output(\n\t\tEmpId as string,\n\t\tEmpname as string,\n\t\tGender as string,\n\t\tSalary as string,\n\t\tDeptId as string,\n\t\tLocId as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false) ~> sourceEmp\nsourceEmp, sourcedept join(sourceEmp@DeptId == sourcedept@DeptId,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinEmpDept\nJoinEmpDept select(mapColumn(\n\t\tEmpId,\n\t\tEmpname,\n\t\tGender,\n\t\tSalary,\n\t\tDeptname,\n\t\tLocId\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Selectcolumns\nSelectcolumns, sourceLoc join(Selectcolumns@LocId == sourceLoc@LocId,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinEmpLoc\nJoinEmpLoc sort(asc(EmpId, true)) ~> SortRecords\nSortRecords sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+			"script": "source(output(\n\t\tDeptId as string,\n\t\tDeptname as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false) ~> sourcedept\nsource(output(\n\t\tLocId as string,\n\t\tLocname as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false) ~> sourceLoc\nsource(output(\n\t\tEmpId as string,\n\t\tEmpname as string,\n\t\tGender as string,\n\t\tSalary as string,\n\t\tDeptId as string,\n\t\tLocId as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false) ~> sourceEmp\nsourceEmp, sourcedept join(sourceEmp@DeptId == sourcedept@DeptId,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinEmpDept\nJoinEmpDept select(mapColumn(\n\t\tEmpId,\n\t\tEmpname,\n\t\tGender,\n\t\tSalary,\n\t\tDeptname,\n\t\tLocId\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Selectcolumns\nSelectcolumns, sourceLoc join(Selectcolumns@LocId == sourceLoc@LocId,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinEmpLoc\nJoinEmpLoc sort(asc(EmpId, true)) ~> SortRecords\nSortRecords sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tEmpId as integer,\n\t\tEmpname as string,\n\t\tGender as string,\n\t\tSalary as integer,\n\t\tDeptId as integer,\n\t\tDeptName as string,\n\t\tLocId as integer,\n\t\tLocName as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['EmpId'],\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tEmpId,\n\t\tEmpname,\n\t\tGender,\n\t\tSalary,\n\t\tDeptName = Deptname,\n\t\tLocName = Locname\n\t)) ~> sinkfiletable"
 		}
 	}
 }
