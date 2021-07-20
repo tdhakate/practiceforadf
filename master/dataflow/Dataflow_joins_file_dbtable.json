@@ -1,0 +1,35 @@
+{
+	"name": "Dataflow_joins_file_dbtable",
+	"properties": {
+		"description": "Joined data of 3 files and saved in db table",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Dataset_Employeedata",
+						"type": "DatasetReference"
+					},
+					"name": "sourceemp"
+				},
+				{
+					"dataset": {
+						"referenceName": "Dataset_DepartmentData",
+						"type": "DatasetReference"
+					},
+					"name": "sourcedept"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "JoinEmpDept"
+				},
+				{
+					"name": "Selectcolumns"
+				}
+			],
+			"script": "source(output(\n\t\tEmpId as string,\n\t\tEmpname as string,\n\t\tGender as string,\n\t\tSalary as string,\n\t\tDeptId as string,\n\t\tLocId as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false) ~> sourceemp\nsource(output(\n\t\tDeptId as string,\n\t\tDeptname as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false) ~> sourcedept\nsourceemp, sourcedept join(sourceemp@DeptId == sourcedept@DeptId,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinEmpDept\nJoinEmpDept select(mapColumn(\n\t\tEmpId,\n\t\tEmpname,\n\t\tGender,\n\t\tSalary,\n\t\tDeptname\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Selectcolumns"
+		}
+	}
+}
