@@ -1,0 +1,32 @@
+{
+	"name": "Dataset_LocationData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureStorageLinkedServiceDuplicate",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "LocationData.csv",
+				"container": "csvforjoins"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "LocId",
+				"type": "String"
+			},
+			{
+				"name": "Locname",
+				"type": "String"
+			}
+		]
+	}
+}
