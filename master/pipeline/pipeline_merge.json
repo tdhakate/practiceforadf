@@ -16,18 +16,15 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_merge",
+						"referenceName": "Dataflow_joins_file_dbtable",
 						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "None",
-					"runConcurrently": true,
-					"cacheSinks": {
-						"firstRowOnly": true
-					}
+					"traceLevel": "Coarse",
+					"runConcurrently": true
 				}
 			}
 		],
