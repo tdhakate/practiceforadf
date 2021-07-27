@@ -1,0 +1,31 @@
+{
+	"name": "BlobDynamicfilesBulkCopy",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureStorageLinkedServiceDuplicate",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filenname": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().filenname",
+					"type": "Expression"
+				},
+				"folderPath": "blobfiles",
+				"container": "bulkcopy"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
