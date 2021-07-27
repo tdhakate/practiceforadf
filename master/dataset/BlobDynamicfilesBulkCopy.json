@@ -10,6 +10,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "bulkcopy"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

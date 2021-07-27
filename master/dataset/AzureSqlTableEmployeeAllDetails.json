@@ -5,6 +5,9 @@
 			"referenceName": "AzureSqlDatabaseBulkCopyLinkedService",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "joinsdataset"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [

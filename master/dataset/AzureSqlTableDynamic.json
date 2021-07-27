@@ -13,6 +13,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "bulkcopy"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
