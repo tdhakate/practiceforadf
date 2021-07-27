@@ -3,11 +3,12 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
-				"type": "ExecuteDataFlow",
+				"name": "ListofTableNames",
+				"description": "To get list of tables name",
+				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "1.00:00:00",
+					"timeout": "7.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
@@ -15,15 +16,17 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "Dataflow_joins_file_dbtable",
-						"type": "DataFlowReference"
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select table_schema , table_name from information_schema.tables where table_type='Base Table' and table_schema='dbo'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"dataset": {
+						"referenceName": "AzureSqlTableEmployeeAllDetails",
+						"type": "DatasetReference"
 					},
-					"traceLevel": "Fine"
+					"firstRowOnly": false
 				}
 			}
 		],

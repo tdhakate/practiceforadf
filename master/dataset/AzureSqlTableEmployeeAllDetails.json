@@ -2,7 +2,7 @@
 	"name": "AzureSqlTableEmployeeAllDetails",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSqlDatabase1",
+			"referenceName": "AzureSqlDatabaseBulkCopyLinkedService",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -47,7 +47,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "EmployeeAllDetails"
+			"table": "Employee_1"
 		}
 	}
 }
