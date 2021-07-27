@@ -5,6 +5,9 @@
 			"referenceName": "AzureStorageLinkedServiceDuplicate",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "joinsdataset"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
