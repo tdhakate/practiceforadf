@@ -109,7 +109,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"filenname": {
-											"value": "@concat(item().table_schema,'_' ,item().table_name,'_','utcnow()','.csv')",
+											"value": "@concat(item().table_schema,'_' ,item().table_name,'_',formatDateTime(utcnow(),'yyyMMdd_HHmmss'),'.csv')",
 											"type": "Expression"
 										}
 									}
