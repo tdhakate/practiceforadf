@@ -1,0 +1,24 @@
+{
+	"name": "triggerBulkCopy",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pipeline_bulkcopy",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/bulkcopy/blobs/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/5cea2c62-d229-4496-a264-f57cf2ad9186/resourceGroups/DefaultResourceGroup-CUS/providers/Microsoft.Storage/storageAccounts/sqltablestorageaccount",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
