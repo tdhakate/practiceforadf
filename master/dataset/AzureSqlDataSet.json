@@ -5,6 +5,14 @@
 			"referenceName": "AzureSqlDBLinkedServiceBulkcopy2",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"schema": {
+				"type": "string"
+			},
+			"table": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
