@@ -3,7 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "LookupTogetlistofTables",
+				"name": "ListofTableNames",
+				"description": "To get list of tables name",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -17,23 +18,23 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "\nselect table_schema , table_name from information_schema.tables where table_type='Base Table' and table_schema='dbo'",
+						"sqlReaderQuery": "select table_schema , table_name from information_schema.tables where table_type='Base Table' and table_schema='dbo'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "AzureSqlTableSample",
+						"referenceName": "AzureSqlTableEmployeeAllDetails",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
 			},
 			{
-				"name": "CopyEachtabletoblob",
+				"name": "ForEachTable",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "LookupTogetlistofTables",
+						"activity": "ListofTableNames",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -42,13 +43,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('LookupTogetlistofTables').output.value",
+						"value": "@activity('ListofTableNames').output.value",
 						"type": "Expression"
 					},
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Copy_Sql_blob",
+							"name": "CopyTablestoblob",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -88,7 +89,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "AzureSqlDataSet",
+									"referenceName": "AzureSqlTableDynamic",
 									"type": "DatasetReference",
 									"parameters": {
 										"schema": {
@@ -104,10 +105,10 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "DatasetBlobStorage",
+									"referenceName": "BlobDynamicfilesBulkCopy",
 									"type": "DatasetReference",
 									"parameters": {
-										"filename": {
+										"filenname": {
 											"value": "@concat(item().table_schema,'_' ,item().table_name,'_',formatDateTime(utcnow(),'yyyMMdd_HHmmss'),'.csv')",
 											"type": "Expression"
 										}
