@@ -1,0 +1,12 @@
+{
+	"name": "AzureSqlTableSample",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDBLinkedServiceBulkcopy2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}

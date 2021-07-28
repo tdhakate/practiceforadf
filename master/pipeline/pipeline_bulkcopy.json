@@ -17,12 +17,12 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select table_schema , table_name from information_schema.tables where table_type='Base Table' and table_schema='dbo'",
+						"sqlReaderQuery": "\nselect table_schema , table_name from information_schema.tables where table_type='Base Table' and table_schema='dbo'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "AzureSqlDataSet",
+						"referenceName": "AzureSqlTableSample",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
@@ -89,7 +89,17 @@
 							"inputs": [
 								{
 									"referenceName": "AzureSqlDataSet",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": {
+											"value": "@item().table_schema",
+											"type": "Expression"
+										},
+										"table": {
+											"value": "@item().table_name",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
