@@ -19,8 +19,7 @@
 						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"wildcardFileName": "*",
+							"fileListPath": "bulkcopy/csvfiles",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
