@@ -5,6 +5,9 @@
 			"referenceName": "AzureSqlDBLinkedServiceBulkcopy2",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "bulkcopypractice_28July"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": []

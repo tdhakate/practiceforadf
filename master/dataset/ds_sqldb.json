@@ -1,31 +1,25 @@
 {
-	"name": "AzureSqlDataSet",
+	"name": "ds_sqldb",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSqlDBLinkedServiceBulkcopy2",
+			"referenceName": "DatabaseLinkedService",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"schema": {
-				"type": "string"
-			},
-			"table": {
+			"TableName": {
 				"type": "string"
 			}
 		},
 		"folder": {
-			"name": "bulkcopypractice_28July"
+			"name": "bulkcopy_blob_db"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": {
-				"value": "@dataset().schema",
-				"type": "Expression"
-			},
+			"schema": "dbo",
 			"table": {
-				"value": "@dataset().table",
+				"value": "@dataset().TableName",
 				"type": "Expression"
 			}
 		}
