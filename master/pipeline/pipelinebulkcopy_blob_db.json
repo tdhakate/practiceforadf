@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_Blob_DB",
-				"type": "Copy",
+				"name": "Lookup1",
+				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
@@ -16,44 +16,17 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"wildcardFileName": "*",
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT\n     b.[ObjectName]\n    ,FolderName = b.[ObjectValue]\n    ,SQLTable   = s.[ObjectValue]\n    ,Delimiter  = d.[ObjectValue]\nFROM [dbo].[Metadata_ADF] b\nJOIN [dbo].[Metadata_ADF] s ON b.[ObjectName] = s.[ObjectName]\nJOIN [dbo].[Metadata_ADF] d ON b.[ObjectName] = d.[ObjectName]\nWHERE   b.[SourceType] = 'BlobContainer'\n    AND s.[SourceType] = 'SQLTable'\n    AND d.[SourceType] = 'Delimiter';",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
-						"disableMetricsCollection": false
+					"dataset": {
+						"referenceName": "ds_dummy",
+						"type": "DatasetReference"
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "Dataset_blob_csv",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "dataset_sqldb",
-						"type": "DatasetReference"
-					}
-				]
+					"firstRowOnly": false
+				}
 			}
 		],
 		"annotations": []

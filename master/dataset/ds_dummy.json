@@ -1,0 +1,12 @@
+{
+	"name": "ds_dummy",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DatabaseLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
