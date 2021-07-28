@@ -3,8 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ListofTableNames",
-				"description": "To get list of tables name",
+				"name": "LookupTogetlistofTables",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -23,18 +22,18 @@
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "AzureSqlTableEmployeeAllDetails",
+						"referenceName": "AzureSqlDataSet",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
 			},
 			{
-				"name": "ForEachTable",
+				"name": "CopyEachtabletoblob",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "ListofTableNames",
+						"activity": "LookupTogetlistofTables",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -43,13 +42,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('ListofTableNames').output.value",
+						"value": "@activity('LookupTogetlistofTables').output.value",
 						"type": "Expression"
 					},
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "CopyTablestoblob",
+							"name": "Copy_Sql_blob",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -89,26 +88,16 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "AzureSqlTableDynamic",
-									"type": "DatasetReference",
-									"parameters": {
-										"schema": {
-											"value": "@item().table_schema",
-											"type": "Expression"
-										},
-										"table": {
-											"value": "@item().table_name",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "AzureSqlDataSet",
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "BlobDynamicfilesBulkCopy",
+									"referenceName": "DatasetBlobStorage",
 									"type": "DatasetReference",
 									"parameters": {
-										"filenname": {
+										"filename": {
 											"value": "@concat(item().table_schema,'_' ,item().table_name,'_',formatDateTime(utcnow(),'yyyMMdd_HHmmss'),'.csv')",
 											"type": "Expression"
 										}
