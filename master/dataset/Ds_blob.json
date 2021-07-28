@@ -1,0 +1,49 @@
+{
+	"name": "Ds_blob",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Foldername": {
+				"type": "string"
+			},
+			"delimiterSymbol": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "bulkcopy_blob_db"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "@dataset().Foldername",
+					"type": "Expression"
+				},
+				"container": "bulkcopy"
+			},
+			"columnDelimiter": {
+				"value": "@dataset().delimiterSymbol",
+				"type": "Expression"
+			},
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "DeptId",
+				"type": "String"
+			},
+			{
+				"name": "Deptname",
+				"type": "String"
+			}
+		]
+	}
+}
