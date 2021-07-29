@@ -1,0 +1,41 @@
+{
+	"name": "SourceDataset_doj",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Employee_1.csv",
+				"folderPath": "blobtosql",
+				"container": "bulkcopy"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "EmpCode",
+				"type": "String"
+			},
+			{
+				"name": "EmpFName",
+				"type": "String"
+			},
+			{
+				"name": "EmpLName",
+				"type": "String"
+			},
+			{
+				"name": "Job",
+				"type": "String"
+			}
+		]
+	}
+}
