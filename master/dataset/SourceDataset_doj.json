@@ -5,6 +5,9 @@
 			"referenceName": "BlobLinkedService",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "ingest_copy"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
