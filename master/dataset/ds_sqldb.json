@@ -5,6 +5,11 @@
 			"referenceName": "DatabaseLinkedService",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"table": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "bulkcopy_blob_db"
 		},
@@ -12,7 +17,11 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": ""
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().table",
+				"type": "Expression"
+			}
 		}
 	}
 }
