@@ -49,10 +49,7 @@
 				"outputs": [
 					{
 						"referenceName": "ds_sqldb",
-						"type": "DatasetReference",
-						"parameters": {
-							"table": "_noSet"
-						}
+						"type": "DatasetReference"
 					}
 				]
 			}
