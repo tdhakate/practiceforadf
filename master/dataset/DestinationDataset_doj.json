@@ -1,0 +1,16 @@
+{
+	"name": "DestinationDataset_doj",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DatabaseLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Employee2"
+		}
+	}
+}

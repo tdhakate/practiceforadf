@@ -1,0 +1,118 @@
+{
+	"name": "CopyPipeline_blobsql29",
+	"properties": {
+		"description": "Copy dat from blob to storage by using ingest",
+		"activities": [
+			{
+				"name": "Copy_doj",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "bulkcopy/blobtosql/Employee_1.csv"
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Employee2"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings",
+							"skipLineCount": 0
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"validateDataConsistency": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "EmpCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "EmpCode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "EmpFName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "EmpFName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "EmpLName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "EmpLName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Job",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Job",
+									"type": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_doj",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_doj",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
