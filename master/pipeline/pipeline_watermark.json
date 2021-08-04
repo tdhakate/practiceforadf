@@ -24,7 +24,7 @@
 						"referenceName": "ds_source_data_table",
 						"type": "DatasetReference"
 					},
-					"firstRowOnly": false
+					"firstRowOnly": true
 				}
 			},
 			{
