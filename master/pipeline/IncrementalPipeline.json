@@ -50,7 +50,7 @@
 						"referenceName": "ds_sourcedata",
 						"type": "DatasetReference"
 					},
-					"firstRowOnly": false
+					"firstRowOnly": true
 				}
 			},
 			{
@@ -95,24 +95,6 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "PersonID"
-								},
-								"sink": {
-									"name": "PersonID"
-								}
-							},
-							{
-								"source": {
-									"name": "Name"
-								},
-								"sink": {
-									"name": "Name"
-								}
-							}
-						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
