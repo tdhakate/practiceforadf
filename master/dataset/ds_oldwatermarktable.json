@@ -1,0 +1,16 @@
+{
+	"name": "ds_oldwatermarktable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservice_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "watermarktable"
+		}
+	}
+}
