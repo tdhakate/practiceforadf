@@ -81,7 +81,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select PersonID as  Id ,Name as Name from data_source_table where LastModifytime > '@{activity('Lookup_oldwatermark').output.firstRow.WatermarkValue}' and LastModifytime <= '@{activity('Lookup_newwatermark').output.firstRow.NewWatermarkvalue}'",
+							"value": "select PersonID as  Id ,Name as Name from data_source_table where LastModifytime > '@{activity('Lookup_oldwatermark').output.firstRow.WatermarkValue}' and LastModifytime <= '@{activity('Lookup_newwatermark').output.firstRow.NewWatermarkvalue}'\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
