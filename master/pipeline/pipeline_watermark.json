@@ -80,6 +80,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select Id , Name from data_source_table where LastModifytime > '@{activity('Lookup_oldwatermark').output.firstRow.WatermarkValue}' and LastModifytime <= '@{activity('Lookup_newwatermark').output.firstRow.NewWatermarkvalue}'",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -92,8 +96,7 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "PersonID",
-									"precision": 10
+									"name": "Id"
 								},
 								"sink": {
 									"name": "Id",
