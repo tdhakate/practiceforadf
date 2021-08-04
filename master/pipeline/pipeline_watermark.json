@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select PersonID as  Id ,Name as Name , LastModifytime from data_source_table",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
