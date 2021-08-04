@@ -156,14 +156,14 @@
 					"storedProcedureParameters": {
 						"LastModifiedtime": {
 							"value": {
-								"value": "@activity('Lookup_newwatermark').output.firstRow.NewWatermarkvalue}",
+								"value": "@{activity('Lookup_newwatermark').output.firstRow.NewWatermarkvalue}",
 								"type": "Expression"
 							},
 							"type": "DateTime"
 						},
 						"TableName": {
 							"value": {
-								"value": "@activity('Lookup_oldwatermark').output.firstRow.TableName",
+								"value": "@{activity('Lookup_oldwatermark').output.firstRow.TableName}",
 								"type": "Expression"
 							},
 							"type": "String"
