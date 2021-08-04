@@ -1,0 +1,26 @@
+{
+	"name": "ds_emp_table",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservice_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "emp_table"
+		}
+	}
+}
