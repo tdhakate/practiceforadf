@@ -88,7 +88,15 @@
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "AzureSqlSink"
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
 					"enableStaging": false,
 					"translator": {
@@ -99,7 +107,7 @@
 									"name": "Id"
 								},
 								"sink": {
-									"name": "Id",
+									"ordinal": 1,
 									"precision": 10
 								}
 							},
@@ -108,7 +116,7 @@
 									"name": "Name"
 								},
 								"sink": {
-									"name": "Name"
+									"ordinal": 2
 								}
 							}
 						],
@@ -127,7 +135,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_emp_table",
+						"referenceName": "watermark_blobfile",
 						"type": "DatasetReference"
 					}
 				]
