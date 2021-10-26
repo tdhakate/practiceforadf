@@ -1,0 +1,9 @@
+{
+	"name": "adffs-triveni",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "4dc37e21-6c5d-468a-ad89-35a02a9ace3b",
+		"tenantId": "63965670-7e07-4691-938b-89a77223d4d3"
+	}
+}
