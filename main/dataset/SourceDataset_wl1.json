@@ -1,0 +1,16 @@
+{
+	"name": "SourceDataset_wl1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SalesLT",
+			"table": "SalesOrderDetail"
+		}
+	}
+}
